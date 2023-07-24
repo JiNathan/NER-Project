@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "NER Task Nathan Ji",
+  "version": "1.0",
+  "description": "Identifies Named Entities on Screen",
+  "permissions": [
+    "http://localhost:8000/*"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}

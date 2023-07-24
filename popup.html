@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NER Extension</title>
+  <style>
+    body {
+      width: 200px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>NER Extension</h1>
+  <label>
+    <input type="checkbox" id="highlightToggle" />
+    Enable Word Highlighting
+  </label>
+  <script>
+    function toggleHighlighting() {
+      const highlightToggle = document.getElementById('highlightToggle');
+      const shouldHighlight = highlightToggle.checked;
+      const wordsToHighlight = ['example', 'highlight', 'toggle']; ****IN ACTUAL CODE THIS WOULD BE CHANGED TO THE ONES THE NER MODEL WOULD IDENTIFY****
+    function fetchWordsToHighlight() {
+      fetch('http://localhost:5000/get_words_to_highlight')
+        .then(response => response.json())
+        .then(data => {
+          const wordsToHighlight = data;
+        })
+        .catch(error => {
+          console.error('Error fetching wordsToHighlight:', error);
+        });
+    }
+      function highlightWords(shouldHighlight) {
+        const paragraphs = document.getElementsByTagName('p');
+        for (const paragraph of paragraphs) {
+          const words = paragraph.innerHTML.split(' ');
+          paragraph.innerHTML = words
+            .map((word) =>
+              wordsToHighlight.includes(word.toLowerCase())
+                ? `<span style="background-color: yellow;">${word}</span>`
+                : word
+            )
+            .join(' ');
+        }
+      }
+
+      if (shouldHighlight) {
+        highlightWords(true);
+      } else {
+        highlightWords(false);
+      }
+    }
+
+    const highlightToggle = document.getElementById('highlightToggle');
+    highlightToggle.addEventListener('change', toggleHighlighting);
+
+    toggleHighlighting();
+  </script>
+</body>
+</html>
